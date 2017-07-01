@@ -8,7 +8,6 @@ public class PrefixTreeNode {
     private PrefixTreeNode parent;
     private PrefixTreeNode[] children;
     private boolean isLeaf;     //Quick way to check if any children exist
-//    private boolean isWord;     //represents the last character of a word
     private String definition;     //represents the definition of a word
     private char character;     //The character this node represents
 
@@ -16,7 +15,6 @@ public class PrefixTreeNode {
     public PrefixTreeNode() {
         children = new PrefixTreeNode[26];
         isLeaf = true;
-//        isWord = false;
     }
 
 //    Constructor to initialize the other nodes
@@ -28,22 +26,21 @@ public class PrefixTreeNode {
     protected void addWord(String word, String definition) {
         isLeaf = false;
         int charPos = word.charAt(0) - 'a';
-        System.out.println("Char Position in the alphabet = " + (word.charAt(0) - 'a'));
+//        System.out.println("Char Position in the alphabet = " + (word.charAt(0) - 'a'));
         if (children[charPos] == null) {
-            System.out.println("Add char " + word.charAt(0) + " at index of children: " + charPos);
+//            System.out.println("Add char " + word.charAt(0) + " at index of children: " + charPos);
             children[charPos] = new PrefixTreeNode(word.charAt(0));
-            System.out.println("Set parent to this node");
+//            System.out.println("Set parent to this node");
             children[charPos].parent = this;
         }
 
         if (word.length() > 1) {
-            System.out.println("Word size is " + word.length() + " so call the method recursively in the substring " + word.substring(1));
+//            System.out.println("Word size is " + word.length() + " so call the method recursively in the substring " + word.substring(1));
             children[charPos].addWord(word.substring(1), definition);
         } else {
-            System.out.println("The word lenght is " + word.length() + " so flag as isWord and get out");
-//            children[charPos].isWord = true;
+//            System.out.println("The word lenght is " + word.length() + " so flag as isWord and get out");
             children[charPos].definition = definition;
-            System.out.println("printing the word with the toString() recursive method: " + children[charPos]);
+//            System.out.println("printing the word with the toString() recursive method: " + children[charPos]);
         }
     }
 

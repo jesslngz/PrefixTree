@@ -3,16 +3,13 @@ package SufixTree;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrefixTree
-{
+public class PrefixTree {
    private PrefixTreeNode root;
-   
 
    public PrefixTree()
    {
       root = new PrefixTreeNode();
    }
-   
 
    public void addWord(String word, String definition)
    {

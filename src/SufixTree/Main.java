@@ -4,21 +4,45 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         PrefixTree prefixTree = new PrefixTree();
 
-        Scanner fileReader = new Scanner(System.in);  // Reading from System.in
-//        System.out.println("Enter the path of the file: ");
-//        String file = fileReader.nextLine();
-        String file = "C:/Users/I859949/Downloads/nomes.csv";
+        Scanner scanner = new Scanner(System.in);  // Reading from System.in
+        String file = "../nomes.csv";
         HashMap wordsHashMap = readWords(file);
         for(Object key : wordsHashMap.keySet()) {
             prefixTree.addWord(key.toString(), wordsHashMap.get(key).toString());
         }
-        System.out.println(prefixTree.getWords("gu"));
+
+        //Start of user interaction
+        System.out.print("Digite o prefixo para podermos procurar palavras que o contenham: ");
+        List wordsList = prefixTree.getWords(scanner.next());
+
+        while (wordsList.isEmpty()) {
+            System.out.print("Não encontramos palavras com este prefixo. Digite outro prefixo: ");
+            wordsList = prefixTree.getWords(scanner.next());
+        }
+
+        if (!wordsList.isEmpty()) {
+            System.out.print("Agora digite uma das palavras ao lado e diremos o significado: ");
+            System.out.println(wordsList);
+
+            String word = scanner.next();
+            String meaning = (String)wordsHashMap.get(word); //Search word meaning
+
+            while (meaning == null) { //If the user enters the wrong word
+                System.out.print("A palavra digitada não está na lista. Digite uma das palavras ao lado: ");
+                System.out.println(wordsList);
+
+                word = scanner.next();
+                meaning = (String)wordsHashMap.get(word); //Search word meaning
+            }
+            System.out.println(String.format("O significado de %s é: %s.", word, meaning));
+        }
     }
 
     private static HashMap readWords(String file) throws IOException {
